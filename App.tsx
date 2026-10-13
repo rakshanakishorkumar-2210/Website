@@ -538,7 +538,20 @@ export default function App() {
                     placeholder="YYYY-MM-DD (e.g. 2026-10-25)"
                     placeholderTextColor="#64748B"
                     value={dueDate}
-                    onChangeText={setDueDate}
+
+                    onChangeText={(text) => {
+                      const numbersOnly = text.replace(/[^0-9]/g, "").slice(0, 8);
+                      const formatted =
+                        numbersOnly.length > 6
+                          ? `${numbersOnly.slice(0, 4)}-${numbersOnly.slice(4, 6)}-${numbersOnly.slice(6)}`
+                          : numbersOnly.length > 4
+                            ? `${numbersOnly.slice(0, 4)}-${numbersOnly.slice(4)}`
+                            : numbersOnly;
+
+                      setDueDate(formatted);
+                    }}
+                    keyboardType="numeric"
+                    maxLength={10}
                   />
                 </View>
 
